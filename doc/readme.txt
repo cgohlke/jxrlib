@@ -1,21 +1,56 @@
-# jxrlib
-### JPEG XR Format
-JPEG XR is a still image format based on
-technology originally developed by Mirosoft under the name HD Photo (formerly
-Windows Media‚Ñ¢ Photo). The JPEG XR format is similar, but not identical, to the
-HD Photo/Windows Media‚Ñ¢ Photo format.
+JPEG XR Device Porting Kit v1.0 - April 2013
+---------------------------------------------------------------------------------
 
-The JPEG XR format replaces the HD Photo/Windows Media‚Ñ¢ Photo format in both
+JPEG XR
+-------
+This device porting kit (DPK) supports the JPEG XR still image format, based on
+technology originally developed by Mirosoft under the name HD Photo (formerly
+Windows Mediaô Photo). The JPEG XR format is similar, but not identical, to the
+HD Photo/Windows Mediaô Photo format.
+
+The JPEG XR format replaces the HD Photo/Windows Mediaô Photo format in both
 Windows 8 and the Windows Image Component (WIC). WIC accompanies the Internet
 Explorer 10 redistributable packages for down-level versions of Windows.
-Some ‚ÄúWindows Media‚Ñ¢ Photo‚Äù (WMP) naming conventions are still used internally
+Some ìWindows Mediaô Photoî (WMP) naming conventions are still used internally
 with this release of the DPK.
 
 JPEG XR files use the .jxr extension.  Applications that support the JPEG XR
-file format should recognize and decode HD Photo/Windows Media‚Ñ¢ Photo
+file format should recognize and decode HD Photo/Windows Mediaô Photo
 .hdp/.wdp files, but only offer to create files with the .jxr extension.
 
-### JPEG XR Image Coding Specification
+
+Device Porting Kit Contents
+---------------------------
+This device porting kit contains documentation, reference source code, sample 
+applications and utilities for the evaluation and implementation of the JPEG XR
+file format and compression technology.
+
+Assuming the installation dir is C:\jxrlib, all the paths mentioned below are 
+relative to this base path.
+
+   The Visual Studio 2012 main solution is:
+   jxrencoderdecoder\JXR_vc11.sln
+
+   Build JXR.sln Debug Configuration, you will get:
+   jxrencoderdecoder\Debug\JXRDecApp\JXRDecApp.exe
+   jxrencoderdecoder\Debug\JXREncApp\JXREncApp.exe
+
+The main directory contains a Unix/Linux compatible make file for building the
+encoder and decoder, and associated libraries, including support for big endian
+or little endian processor architecture by setting BIG_ENDIAN=1 at build time.
+It is the developer's responsibility to properly organize all the source files
+according to the paths defined in this make file for its correct operation.
+This is provided as a convenience for cross-platform developers and to demonstrate
+the correct operation of the encoder and decoder on big endian systems.
+
+To build static libraries:
+
+   make
+
+To build shared libraries:
+
+   make SHARED=1
+
 The JPEG XR Image Coding Spectification provides a detailed specification of the 
 compression encoder and decoder algorithms plus the detailed structure of the 
 compressed data (elementary) bit stream.  This document is designed to be used in 
@@ -27,7 +62,6 @@ The JPEG XR Image Coding Spectification is an international standard and is
 available at: http://www.itu.int/rec/T-REC-T.832 while the reference software is
 available at: http://www.itu.int/rec/T-REC-T.835.
 
-### Status of JPEG XR implementation
 "JPEGXR_DPK_1.0.doc" documents the contents of this porting kit, the usage of 
 the command line file conversion utilities (JXREncApp.exe and JXRDecApp.exe), and 
 technical details of the API's and data structures between these sample command 
@@ -48,7 +82,8 @@ successfully tested the encoder and decoder using a big endian processor.  This
 support is provided as a starting reference to be adapted to the specific 
 platform and hardware architecture of the target system.
 
-### Contact Information
+Contact Information
+-------------------
 For any and all technical questions or feedback about any part of this Device
 Porting Kit, including the documentation, please send email to:
 
@@ -60,8 +95,6 @@ Additional information, best practices, tools, utilities, sample code, sample
 image content, links to additional resources and community discussion can 
 currently be found at http://hdview.wordpress.com/.
 
-#### The Microsoft JPEG XR Development Team
-### Interesting links
-[JPEG XR Updates](https://hdview.wordpress.com/2013/05/30/jpegxr-updates/)
+ - The Microsoft JPEG XR Development Team
 
-[JPEG XR Photoshop Plugin and Source Code](https://hdview.wordpress.com/2013/04/11/jpegxr-photoshop-plugin-and-source-code/)
+---------------------------------------------------------------------------------
