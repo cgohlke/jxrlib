@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -329,7 +329,7 @@ static const Int g_Index12Table[] = {  // index12 is the most critical symbol
     3,1,7,4,7,3,8,4,7,4,8,5,
 };
 static const Int g12CodeTable[] = {
-    12,  
+    12,
     1, 5,
     1, 6,
     0, 7,
@@ -411,7 +411,7 @@ static const Int g12DeltaTable[] = {
 **********************************************************************/
 static const Int THRESHOLD = 8;
 static const Int MEMORY = 8;
- 
+
 Void AdaptDiscriminant (CAdaptiveHuffman *pAdHuff)
 {
     Int iSym = pAdHuff->m_iNSymbols, t, dL, dH;

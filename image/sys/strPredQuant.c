@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -100,7 +100,7 @@ Void remapQP(CWMIQuantizer * pQP, I32 iShift, Bool bScaledArith)
 #if defined(WMP_OPT_QT)
         pQP->f1_QP = 1.0f / pQP->iQP;
         pQP->d1_QP = 1.0 / pQP->iQP;
-#endif    
+#endif
     }
     else {
         I32 man = 0, exp = 0;
@@ -109,7 +109,7 @@ Void remapQP(CWMIQuantizer * pQP, I32 iShift, Bool bScaledArith)
             man = pQP->iIndex, exp = iShift;
         else
             man = 16 + (pQP->iIndex & 0xf), exp = ((pQP->iIndex >> 4) - 1) + iShift;
-        
+
         pQP->iQP = man << exp;
         pQP->iMan = gs_QPRecipTable[man].iMan;
         pQP->iExp = gs_QPRecipTable[man].iExp + exp;
@@ -117,7 +117,7 @@ Void remapQP(CWMIQuantizer * pQP, I32 iShift, Bool bScaledArith)
 #if defined(WMP_OPT_QT)
         pQP->f1_QP = 1.0f / pQP->iQP;
         pQP->d1_QP = 1.0 / pQP->iQP;
-#endif    
+#endif
     }
 }
 
@@ -130,10 +130,10 @@ Int allocatePredInfo(CWMImageStrCodec *pSC)
     const size_t iChannels = pSC->m_param.cNumChannels;
     CWMIPredInfo* pMemory;
     Bool b32Bit = sizeof(size_t) == 4;
-    
+
     if(b32Bit) // integer overlow/underflow check for 32-bit system
         if(((mbWidth >> 16) * iChannels * 2 * sizeof(CWMIPredInfo)) & 0xffff0000)
-            return ICERR_ERROR;    
+            return ICERR_ERROR;
     pMemory = (CWMIPredInfo *)malloc(mbWidth * iChannels * 2 * sizeof(CWMIPredInfo));
     if (pMemory == NULL)
         return ICERR_ERROR;
@@ -144,13 +144,13 @@ Int allocatePredInfo(CWMImageStrCodec *pSC)
         pMemory += mbWidth;
         pSC->PredInfoPrevRow[i] = pMemory;
         pMemory += mbWidth;
-        
+
         for(j = 0; j < mbWidth; j ++){
             pSC->PredInfo[i][j].piAD = pSC->PredInfo[i][j].iAD;
             pSC->PredInfoPrevRow[i][j].piAD = pSC->PredInfoPrevRow[i][j].iAD;
         }
     }
-    
+
     return ICERR_OK;
 }
 
@@ -262,7 +262,7 @@ Void updatePredInfo(CWMImageStrCodec *pSC, CWMIMBInfo * pMBInfo, size_t mbX, COL
 
         /* QP Index */
         pPredInfo->iQPIndex = pMBInfo->iQIndexLP;
-        
+
         /* first row and first column of ACs of DC block */
         copyAC(p, pPredInfo->piAD);
     }
@@ -271,10 +271,10 @@ Void updatePredInfo(CWMImageStrCodec *pSC, CWMIMBInfo * pMBInfo, size_t mbX, COL
         for(i = 1U; i < 3U; i ++){
             pPredInfo = pSC->PredInfo[i] + mbX;
             p = pMBInfo->iBlockDC[i];//[dcBlkIdx + i];
-            
+
             /* DC of DC block */
             pPredInfo->iDC = p[0];
-            
+
             /* QP Index */
             pPredInfo->iQPIndex = pMBInfo->iQIndexLP;
             /* first row and first column of ACs of DC block */
@@ -293,7 +293,7 @@ Void updatePredInfo(CWMImageStrCodec *pSC, CWMIMBInfo * pMBInfo, size_t mbX, COL
 
             /* DC of DC block */
             pPredInfo->iDC = p[0];
-            
+
             /* first row and first column of ACs of first DC block */
             pPredInfo->piAD[0] = p[1];
             pPredInfo->piAD[1] = p[2];

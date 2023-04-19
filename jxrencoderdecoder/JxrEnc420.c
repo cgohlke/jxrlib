@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -58,27 +58,27 @@ void init_encoder_params(CWMIStrCodecParam* params, int quality_i)
     {
         // convert quality parameter into QP indecies
         float quality = ((float)quality_i) / 100.f;
-        int   index   = (int) ((QP_TAB_SIZE-1) * quality); 
+        int   index   = (int) ((QP_TAB_SIZE-1) * quality);
         float frac    = ((QP_TAB_SIZE-1) * quality) - (float)index;
-    
+
         const int *pQPs = DPK_QPS_420[index];
-    
+
 		if (quality >= 0.5F)
 			params->olOverlap = OL_ONE;
 		else
 			params->olOverlap = OL_TWO;
 
-        params->uiDefaultQPIndex    = 
+        params->uiDefaultQPIndex    =
             (U8) (0.5f + (float) pQPs[0] * (1.f - frac) + (float) (pQPs + 6)[0] * frac);
-        params->uiDefaultQPIndexU   = 
+        params->uiDefaultQPIndexU   =
             (U8) (0.5f + (float) pQPs[1] * (1.f - frac) + (float) (pQPs + 6)[1] * frac);
-        params->uiDefaultQPIndexV   = 
+        params->uiDefaultQPIndexV   =
             (U8) (0.5f + (float) pQPs[2] * (1.f - frac) + (float) (pQPs + 6)[2] * frac);
-        params->uiDefaultQPIndexYHP = 
+        params->uiDefaultQPIndexYHP =
             (U8) (0.5f + (float) pQPs[3] * (1.f - frac) + (float) (pQPs + 6)[3] * frac);
-        params->uiDefaultQPIndexUHP = 
+        params->uiDefaultQPIndexUHP =
             (U8) (0.5f + (float) pQPs[4] * (1.f - frac) + (float) (pQPs + 6)[4] * frac);
-        params->uiDefaultQPIndexVHP = 
+        params->uiDefaultQPIndexVHP =
             (U8) (0.5f + (float) pQPs[5] * (1.f - frac) + (float) (pQPs + 6)[5] * frac);
     }
 }
@@ -86,9 +86,9 @@ void init_encoder_params(CWMIStrCodecParam* params, int quality_i)
 //================================================================
 // main function
 //================================================================
-int 
+int
 #ifndef __ANSI__
-__cdecl 
+__cdecl
 #endif // __ANSI__
 main(int argc, char* argv[])
 {
@@ -143,7 +143,7 @@ main(int argc, char* argv[])
     {
         CWMIStrCodecParam params;
         init_encoder_params(&params, quality);
-    
+
         // run encoder
         ERR err;
         PKFactory*        pFactory      = NULL;
@@ -153,18 +153,18 @@ main(int argc, char* argv[])
         const PKIID*      pIID          = NULL;
         struct WMPStream* pDecodeStream = NULL;
         PKImageDecode*    pDecoder      = NULL;
-    
+
         Call( PKCreateFactory(&pFactory, PK_SDK_VERSION) );
         Call( pFactory->CreateStreamFromFilename(&pEncodeStream, jxr_path, "wb") );
         Call( pFactory->CreateStreamFromFilename(&pDecodeStream, yuv_path, "rb") );
- 
+
         // decode
         PKRect rc;
         rc.X = 0;
         rc.Y = 0;
         rc.Width  = width;
         rc.Height = height;
-   
+
         Call( GetTestDecodeIID(".iyuv", &pIID) );
         Call( PKTestFactory_CreateCodec(pIID, (void **) &pDecoder) );
         Call( pDecoder->Initialize(pDecoder, pDecodeStream) );
@@ -177,7 +177,7 @@ main(int argc, char* argv[])
         Call( pEncoder->Initialize(pEncoder, pEncodeStream, &params, sizeof(params)) );
         Call( pEncoder->SetPixelFormat(pEncoder, GUID_PKPixelFormat12bppYCC420) );
         Call( pEncoder->SetSize(pEncoder, width, height) );
-        Call( pEncoder->WritePixels(pEncoder, height, (U8*)image_buffer, width*3) ); 
+        Call( pEncoder->WritePixels(pEncoder, height, (U8*)image_buffer, width*3) );
 
 Cleanup:
          if( pDecoder )      pDecoder->Release(&pDecoder);

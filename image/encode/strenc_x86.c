@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -318,7 +318,7 @@ Int quantizeMacroblock(CWMImageStrCodec* pSC)
 
     __m128 owQT[2];
 
-    
+
 
     for (iChannel = 0; iChannel < 3; iChannel ++) {
         CWMIQuantizer* pQPDC = pTile->pQuantizerDC[iChannel];
@@ -338,9 +338,9 @@ Int quantizeMacroblock(CWMImageStrCodec* pSC)
         owQT[1].m128_f32[1] = pQPHP->f1_QP;
         owQT[1].m128_f32[2] = pQPHP->f1_QP;
         owQT[1].m128_f32[3] = pQPHP->f1_QP;
-        
-        
-        
+
+
+
 
         for(j = 0; j < 16; j ++){
             PixelI* pData = pSC->pPlane[iChannel] + blkOffset[j];
@@ -355,7 +355,7 @@ Int quantizeMacroblock(CWMImageStrCodec* pSC)
                 pData[i] = (pQPHP->iMan == 0 ? QUANT_Mulless(pData[i], pQPHP->iOffset, pQPHP->iExp) : QUANT(pData[i], pQPHP->iOffset, pQPHP->iMan, pQPHP->iExp));
         }
     }
-    
+
     for (iChannel = 0; iChannel < 3; iChannel ++) {
         I32* pDC = pSC->MBInfo.iBlockDC[iChannel];
         PixelI* pData = pSC->pPlane[iChannel];
@@ -404,6 +404,6 @@ void StrEncOpt(CWMImageStrCodec* pSC)
     }
 #else
     UNREFERENCED_PARAMETER( pSC );
-#endif    
+#endif
 }
 

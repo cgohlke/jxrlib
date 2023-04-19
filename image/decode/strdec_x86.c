@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -59,7 +59,7 @@ __declspec(naked) void __stdcall storeRGB24_5(
     UNREFERENCED_PARAMETER( cmb );
     __asm {
         push ebp
-        push ebx    
+        push ebx
         push esi
         push edi
 
@@ -475,7 +475,7 @@ __declspec(naked) void __stdcall storeRGB24_3(
     UNREFERENCED_PARAMETER( Shift );
     __asm {
         push ebp
-        push ebx    
+        push ebx
         push esi
         push edi
 
@@ -1330,7 +1330,7 @@ __declspec(naked) void __stdcall strPost4x4Stage1_alternate_ASM5(PixelI* p0, Pix
         sub eax, ecx
         push eax
         sub eax, ecx
-        
+
         push edx
         sub edx, ecx
         push edx
@@ -1345,7 +1345,7 @@ __declspec(naked) void __stdcall strPost4x4Stage1_alternate_ASM5(PixelI* p0, Pix
         sub eax, ecx
         push eax
         sub eax, ecx
-                
+
         push edx
         sub edx, ecx
         push edx
@@ -1362,7 +1362,7 @@ __declspec(naked) void __stdcall strPost4x4Stage1_alternate_ASM5(PixelI* p0, Pix
         mov ebp, (4 + 4) * -16
         push ebp
     }
-Loop0:        
+Loop0:
     __asm {
         mov esi, [esp + (4 + 4) * 16 + 4 + ebp ]    // $esi = p0
         mov edi, [esp + (4 + 4) * 16 + 4 + ebp + 4] // $edi = p1
@@ -1635,6 +1635,6 @@ void StrDecOpt(CWMImageStrCodec* pSC)
     }
 #else
     UNREFERENCED_PARAMETER( pSC );
-#endif    
+#endif
 }
 

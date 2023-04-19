@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -36,7 +36,7 @@ typedef struct tagWMPENCAPPARGS
 {
     char* szInputFile;
     char* szOutputFile;
-    
+
     PKPixelFormatGUID guidPixFormat;
 //    Bool bFlagRGB_BGR;
 
@@ -51,7 +51,7 @@ void WmpEncAppUsage(const char* szExe)
 {
     printf(CRLF);
     printf("JPEG XR Encoder Utility" CRLF);
-    printf("Copyright 2013 Microsoft Corporation - All Rights Reserved" CRLF); 
+    printf("Copyright 2013 Microsoft Corporation - All Rights Reserved" CRLF);
     printf(CRLF);
     printf("%s [options]..." CRLF, szExe);
     printf(CRLF);
@@ -135,9 +135,9 @@ void WmpEncAppUsage(const char* szExe)
     printf(CRLF);
 
     printf("  -f                           Turn off frequency order bit stream (to spatial)" CRLF);
-    printf(CRLF);    
+    printf(CRLF);
     printf("  -p                           Turn off progressive mode (to sequential)" CRLF);
-    printf(CRLF);    
+    printf(CRLF);
     printf("  -t                           Display timing information" CRLF);
     printf(CRLF);
     printf("  -v                           Display verbose encoder information" CRLF);
@@ -163,13 +163,13 @@ void WmpEncAppUsage(const char* szExe)
     printf("  -Q quantization for alpha    [1 - 255] Default = 1, lossless" CRLF);
     printf(CRLF);
 
-    printf("  -F trimmed flexbits          [0 - 15]  0: no trimming (default)" CRLF);    
-    printf("                                        15: trim all" CRLF);    
+    printf("  -F trimmed flexbits          [0 - 15]  0: no trimming (default)" CRLF);
+    printf("                                        15: trim all" CRLF);
     printf(CRLF);
-    printf("  -s skip subbands             0: All subbands included (default)" CRLF);    
-    printf("                               1: Skip flexbits" CRLF);    
-    printf("                               2: Skip highpass" CRLF);    
-    printf("                               3: Skip highpass & lowpass (DC only)" CRLF);    
+    printf("  -s skip subbands             0: All subbands included (default)" CRLF);
+    printf("                               1: Skip flexbits" CRLF);
+    printf("                               2: Skip highpass" CRLF);
+    printf("                               3: Skip highpass & lowpass (DC only)" CRLF);
     printf(CRLF);
     printf("Eg: %s -i input.bmp -o output.jxr -q 0.9" CRLF, szExe);
 }
@@ -179,11 +179,11 @@ void WmpEncAppShowArgs(WMPENCAPPARGS* args)
     const char *szCF[] = {"Y_ONLY", "YUV_420", "YUV_422", "YUV_444", "CMYK"};
 
 	GUID guidPF = args->guidPixFormat;
-    
+
     printf("================================" CRLF);
     printf("Input file:   %s" CRLF, args->szInputFile);
     printf("Output file:  %s" CRLF, args->szOutputFile);
-    printf("Color format: %08X-%04X-%04X-%02X%02X%02X%02X%02X%02X%02X%02X" CRLF, 
+    printf("Color format: %08X-%04X-%04X-%02X%02X%02X%02X%02X%02X%02X%02X" CRLF,
         guidPF.Data1, guidPF.Data2, guidPF.Data3, guidPF.Data4[0], guidPF.Data4[1], guidPF.Data4[2],
         guidPF.Data4[3], guidPF.Data4[4], guidPF.Data4[5], guidPF.Data4[6], guidPF.Data4[7]);
     printf("Internal cf:  %s" CRLF, szCF[args->wmiSCP.cfColorFormat]);
@@ -259,7 +259,7 @@ ERR WmpEncAppParseArgs(int argc, char* argv[], WMPENCAPPARGS* args)
         &GUID_PKPixelFormat32bppCMYK,
         &GUID_PKPixelFormat64bppCMYK,
 
-        &GUID_PKPixelFormat12bppYUV420, 
+        &GUID_PKPixelFormat12bppYUV420,
         &GUID_PKPixelFormat16bppYUV422,
         &GUID_PKPixelFormat24bppYUV444,
 
@@ -304,20 +304,20 @@ ERR WmpEncAppParseArgs(int argc, char* argv[], WMPENCAPPARGS* args)
             case 'v':
                 args->wmiSCP.bVerbose = !FALSE;
                 break;
-                
+
             /* simple flag argument */
             case 'f':
                 args->wmiSCP.bfBitstreamFormat = SPATIAL;
                 break;
-            
+
             case 'p':
                 args->wmiSCP.bProgressiveMode = FALSE;
                 break;
-             
+
             case 'u':
                 args->wmiSCP.bUnscaledArith = TRUE;
                 break;
-           
+
             default:
                 i ++;
                 if (i == argc || argv[i][0] == '-') // need more info
@@ -361,24 +361,24 @@ ERR WmpEncAppParseArgs(int argc, char* argv[], WMPENCAPPARGS* args)
                         }
                         break;
 
-                    case 'a': 
+                    case 'a':
                         args->wmiSCP.uAlphaMode = (U8)atoi(argv[i]);
                         break;
 
 /*                    case 'R':
                         args->bFlagRGB_BGR = (Bool)atoi(argv[i]);
                         break;
-*/                
+*/
                     case 'l':
                         args->wmiSCP.olOverlap = (OVERLAP)atoi(argv[i]);
-                        args->bOverlapSet = 1; 
+                        args->bOverlapSet = 1;
                         break;
 
                     case 'd':
                         args->wmiSCP.cfColorFormat = (COLORFORMAT)atoi(argv[i]);
                         args->bColorFormatSet = 1;
                         break;
-                    
+
                     case 'H': // horizontal tiling
                         for(j = 0;;i ++, j ++){
                             args->wmiSCP.uiTileY[j] = atoi(argv[i]);
@@ -418,7 +418,7 @@ ERR WmpEncAppParseArgs(int argc, char* argv[], WMPENCAPPARGS* args)
                     case 'b':
                         args->wmiSCP.bBlackWhite = (Bool)atoi(argv[i]);
                         break;
-                        
+
                     case 'F':
                         args->wmiSCP.uiTrimFlexBits = (U8)atoi(argv[i]);
                         if (args->wmiSCP.uiTrimFlexBits > 15)
@@ -444,7 +444,7 @@ ERR WmpEncAppParseArgs(int argc, char* argv[], WMPENCAPPARGS* args)
 
     for (k = 0; k < 8; k++)
     {
-        if (AlphaPF[k] == (size_t) idxPF) 
+        if (AlphaPF[k] == (size_t) idxPF)
         {
             if(0 == args->wmiSCP.uAlphaMode)//with Alpha and no default, set default as Planar
             {
@@ -574,9 +574,9 @@ int DPK_QPS_32f[11][6] = {
 //================================================================
 // main function
 //================================================================
-int 
+int
 #ifndef __ANSI__
-__cdecl 
+__cdecl
 #endif // __ANSI__
 main(int argc, char* argv[])
 {
@@ -674,7 +674,7 @@ main(int argc, char* argv[])
 	    //[0.0, 0.5)    8-IQ*5     (see table) (see table) (see table) 4:2:0       2
 	    //[0.5, 1.0)    8-IQ*5     (see table) (see table) (see table) 4:4:4       1
 	    //[1.0, 1.0]    1          1           1           1           4:4:4       0
-	
+
         if (args.fltImageQuality < 1.0F)
 	    {
             if (!args.bOverlapSet)

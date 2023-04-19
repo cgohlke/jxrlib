@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -97,7 +97,7 @@ ERR PKImageEncode_WritePixels_IYUV(
     ERR err = WMP_errSuccess;
     struct WMPStream* pS = pIE->pStream;
     size_t iRow, iCol;
-    U32 uYSize, uUVSize; 
+    U32 uYSize, uUVSize;
     U8 *pY;
     U8 *pU;
     U8 *pV;
@@ -126,7 +126,7 @@ ERR PKImageEncode_WritePixels_IYUV(
         return ICERR_ERROR;
     }
 
-    for (iRow = 0; iRow < pIE->uHeight; iRow += 2, pY += pIE->uWidth) 
+    for (iRow = 0; iRow < pIE->uHeight; iRow += 2, pY += pIE->uWidth)
     {
         for (iCol = 0; iCol < pIE->uWidth; iCol += 2, pY += 2)
         {
@@ -178,7 +178,7 @@ ERR PKImageEncode_WritePixels_YUV422(
     ERR err = WMP_errSuccess;
     struct WMPStream* pS = pIE->pStream;
     size_t iRow, iCol;
-    U32 uYSize, uUVSize; 
+    U32 uYSize, uUVSize;
     U8 *pY;
     U8 *pU;
     U8 *pV;
@@ -207,7 +207,7 @@ ERR PKImageEncode_WritePixels_YUV422(
         return ICERR_ERROR;
     }
 //YYUV
-    for (iRow = 0; iRow < pIE->uHeight; iRow += 1) 
+    for (iRow = 0; iRow < pIE->uHeight; iRow += 1)
     {
         for (iCol = 0; iCol < pIE->uWidth; iCol += 2)
         {
@@ -256,7 +256,7 @@ ERR PKImageEncode_WritePixels_YUV444(
     ERR err = WMP_errSuccess;
     struct WMPStream* pS = pIE->pStream;
     size_t iRow, iCol;
-    U32 uYSize, uUVSize; 
+    U32 uYSize, uUVSize;
     U8 *pY;
     U8 *pU;
     U8 *pV;
@@ -285,7 +285,7 @@ ERR PKImageEncode_WritePixels_YUV444(
         return ICERR_ERROR;
     }
 
-    for (iRow = 0; iRow < pIE->uHeight; iRow += 1) 
+    for (iRow = 0; iRow < pIE->uHeight; iRow += 1)
     {
         for (iCol = 0; iCol < pIE->uWidth; iCol += 1)
         {
@@ -478,14 +478,14 @@ ERR PKImageDecode_Copy_IYUV(
     U32 cbStride)
 {
     ERR err = WMP_errSuccess;
-    U32 uYSize, uUVSize; 
+    U32 uYSize, uUVSize;
     U8 *pY;
     U8 *pU;
     U8 *pV;
 
     struct WMPStream* pS = pID->pStream;
 
-    size_t iRow, iCol; 
+    size_t iRow, iCol;
 
     UNREFERENCED_PARAMETER( pRect );
     UNREFERENCED_PARAMETER( cbStride );
@@ -555,14 +555,14 @@ ERR PKImageDecode_Copy_YUV422(
     U32 cbStride)
 {
     ERR err = WMP_errSuccess;
-    U32 uYSize, uUVSize; 
+    U32 uYSize, uUVSize;
     U8 *pY;
     U8 *pU;
     U8 *pV;
 
     struct WMPStream* pS = pID->pStream;
 
-    size_t iRow, iCol; 
+    size_t iRow, iCol;
 
     UNREFERENCED_PARAMETER( pRect );
     UNREFERENCED_PARAMETER( cbStride );
@@ -628,14 +628,14 @@ ERR PKImageDecode_Copy_YUV444(
     U32 cbStride)
 {
     ERR err = WMP_errSuccess;
-    U32 uYSize, uUVSize; 
+    U32 uYSize, uUVSize;
     U8 *pY;
     U8 *pU;
     U8 *pV;
 
     struct WMPStream* pS = pID->pStream;
 
-    size_t iRow, iCol; 
+    size_t iRow, iCol;
 
     UNREFERENCED_PARAMETER( pRect );
     UNREFERENCED_PARAMETER( cbStride );
@@ -667,7 +667,7 @@ ERR PKImageDecode_Copy_YUV444(
         for (iCol = 0; iCol < pID->uWidth; iCol += 1)
         {
             *pb = *pY;
-            pb++; pY++; 
+            pb++; pY++;
 
             *pb = *pU;
             pb++; pU++;

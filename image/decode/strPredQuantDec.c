@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -33,7 +33,7 @@
 Void dequantizeBlock4x4(PixelI * pRec, Int * pOrg, const Int * pIndex, Int iQPLP)
 {
     Int i;
-    
+
     for(i = 1; i < 16; i ++)
         pRec[pIndex[i]] = DEQUANT(pOrg[i], iQPLP);
 }
@@ -314,7 +314,7 @@ Void predACDec(CWMImageStrCodec * pSC)
                     break;
             }
         }
-    }    
+    }
 }
 
 /*************************************************************************
@@ -477,7 +477,7 @@ static Int predCBPC422Dec(CWMImageStrCodec * pSC, Int iCBP, size_t mbX, size_t m
             Int iLeftCBP = (pSC->PredInfo[c] + mbX - 1)->iCBP;
             iCBP ^= ((iLeftCBP >> 1) & 1); // left(1) => 0
         }
-        
+
         iCBP ^= (iCBP & 0x1) << 1; // [0]->[1]
         iCBP ^= (iCBP & 0x3) << 2; // [0 1]->[2 3]
         iCBP ^= (iCBP & 0xc) << 2; // [2 3]->[4 5]

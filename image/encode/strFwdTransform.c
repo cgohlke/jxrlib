@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -92,16 +92,16 @@ Void strDCT4x4SecondStage(PixelI * p)
 {
     /** butterfly **/
     FOURBUTTERFLY(p, 0, 192, 48, 240, 64, 128, 112, 176,16, 208, 32, 224,  80, 144, 96, 160);
-    
+
     /** top left corner, butterfly => butterfly **/
     strDCT2x2up(&p[0], &p[64], &p[16], &p[80]);
-    
+
     /** bottom right corner, pi/8 rotation => pi/8 rotation **/
     fwdOddOdd(&p[160], &p[224], &p[176], &p[240]);
-    
+
     /** top right corner, butterfly => pi/8 rotation **/
     fwdOdd(&p[128], &p[192], &p[144], &p[208]);
-    
+
     /** bottom left corner, pi/8 rotation => butterfly **/
     fwdOdd(&p[32], &p[48], &p[96], &p[112]);
 }
@@ -130,7 +130,7 @@ Void strDCT2x2dnEnc(PixelI *pa, PixelI *pb, PixelI *pc, PixelI *pd)
     C = (*pc + 0) >> 1;
     d = (*pd + 0) >> 1;
     //PixelI t1, t2;
-  
+
     a += d;
     b -= C;
     t = ((a - b) >> 1);
@@ -212,11 +212,11 @@ Void strPre4(PixelI *pa, PixelI *pb, PixelI *pc, PixelI *pd)
 
     a += d, b += c;
     d -= ((a + 1) >> 1), c -= ((b + 1) >> 1);
-    
+
     ROTATE1(c, d);
-    
+
     strHSTenc1_edge(&a, &d); strHSTenc1_edge(&b, &c);
-    
+
     d += ((a + 1) >> 1), c += ((b + 1) >> 1);
     a -= d, b -= c;
 
@@ -309,7 +309,7 @@ Void strPre4x4Stage2Split(PixelI* p0, PixelI* p1)
 }
 
 
-/** 
+/**
     Hadamard+Scale transform
     for some strange reason, breaking up the function into two blocks, strHSTenc1 and strHSTenc
     seems to work faster
@@ -514,15 +514,15 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
             tileY = 0;
         }
         bOneMBLeftVertTB = bOneMBRightVertTB = FALSE;
-        if(tileY > 0 && tileY <= pSC->WMISCP.cNumOfSliceMinus1H && (pSC->cColumn - 1) == pSC->WMISCP.uiTileY[tileY]) 
+        if(tileY > 0 && tileY <= pSC->WMISCP.cNumOfSliceMinus1H && (pSC->cColumn - 1) == pSC->WMISCP.uiTileY[tileY])
             bOneMBRightVertTB = TRUE;
         if(tileY < pSC->WMISCP.cNumOfSliceMinus1H && pSC->cColumn == pSC->WMISCP.uiTileY[tileY + 1]) {
             bVertTileBoundary = TRUE;
-            tileY++; 
+            tileY++;
         }
-        else 
+        else
             bVertTileBoundary = FALSE;
-        if(tileY < pSC->WMISCP.cNumOfSliceMinus1H && (pSC->cColumn + 1) == pSC->WMISCP.uiTileY[tileY + 1]) 
+        if(tileY < pSC->WMISCP.cNumOfSliceMinus1H && (pSC->cColumn + 1) == pSC->WMISCP.uiTileY[tileY + 1])
             bOneMBLeftVertTB = TRUE;
 
         if (pSC->cRow == 0) {
@@ -531,7 +531,7 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
         }
         else if(mbY != pSC->cRow && tileX < pSC->WMISCP.cNumOfSliceMinus1V && pSC->cRow == pSC->WMISCP.uiTileX[tileX + 1]) {
             bHoriTileBoundary = TRUE;
-            tileX++; 
+            tileX++;
         }
         else if(mbY != pSC->cRow)
             bHoriTileBoundary = FALSE;
@@ -619,7 +619,7 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
                 strPre4x4Stage1(p1 + 144, 0);
                 strPre4x4Stage1(p1 + 160, 0);
             }
-            
+
             if (bottom || bHoriTileBoundary)
             {
                 for (j = ((left || bVertTileBoundary) ? 48 : -16); j < (right ? -16 : 240); j += 64)
@@ -667,7 +667,7 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
                 strDCT4x4Stage1(p1 + j + 32);
             }
         }
-        
+
         //================================
         // second level overlap
         if (OL_TWO == olOverlap)
@@ -676,7 +676,7 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
             if ((top || bHoriTileBoundary) && (left || bVertTileBoundary))
                 strPre4(p1 + 0, p1 + 64, p1 + 0 + 16, p1 + 64 + 16);
             if ((top || bHoriTileBoundary) && (right || bVertTileBoundary))
-                strPre4(p1 - 128, p1 - 64, p1 - 128 + 16, p1 - 64 + 16); 
+                strPre4(p1 - 128, p1 - 64, p1 - 128 + 16, p1 - 64 + 16);
             if ((bottom || bHoriTileBoundary) && (left || bVertTileBoundary))
                 strPre4(p0 + 32, p0 + 96, p0 + 32 + 16, p0 + 96 + 16);
             if ((bottom || bHoriTileBoundary) && (right || bVertTileBoundary))
@@ -743,11 +743,11 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
             /* Corner operations */
             if ((top || bHoriTileBoundary) && (left || bVertTileBoundary))
                 strPre4(p1 + 0, p1 + 1, p1 + 2, p1 + 3);
-            if ((top || bHoriTileBoundary) && (right || bVertTileBoundary)) 
+            if ((top || bHoriTileBoundary) && (right || bVertTileBoundary))
                 strPre4(p1 - 27, p1 - 28, p1 - 25, p1 - 26);
             if ((bottom || bHoriTileBoundary) && (left || bVertTileBoundary))
                 strPre4(p0 + 16 + 10, p0 + 16 + 11, p0 + 16 + 8, p0 + 16 + 9);
-            if ((bottom || bHoriTileBoundary) && (right || bVertTileBoundary))               
+            if ((bottom || bHoriTileBoundary) && (right || bVertTileBoundary))
                 strPre4(p0 - 1, p0 - 2, p0 - 3, p0 - 4);
             if(!right && !bottom)
             {
@@ -811,7 +811,7 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
                 strPre4(p1 - 17, p1 - 19, p1 - 11, p1 -  9);
                 strPre4(p1 - 18, p1 - 20, p1 - 12, p1 - 10);
             }
-        }    
+        }
 
         //================================
         // first level transform (420_UV)
@@ -830,7 +830,7 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
                 strDCT4x4Stage1(p1 + j);
             }
         }
-        
+
         //================================
         // second level overlap (420_UV)
         if (OL_TWO == olOverlap)
@@ -843,10 +843,10 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
             if ((right || bVertTileBoundary) && (top || bHoriTileBoundary))
                 COMPUTE_CORNER_PRED_DIFF(p1 - 64 + 32, iPredBefore[i][0]);
 
-            if ((leftAdjacentColumn || bOneMBRightVertTB) && (bottom || bHoriTileBoundary)) 
+            if ((leftAdjacentColumn || bOneMBRightVertTB) && (bottom || bHoriTileBoundary))
                 COMPUTE_CORNER_PRED_DIFF(p0 - 64 + 16, *(p0 - 64 + 48));
 
-            if ((rightAdjacentColumn || bOneMBLeftVertTB) && (bottom || bHoriTileBoundary)) 
+            if ((rightAdjacentColumn || bOneMBLeftVertTB) && (bottom || bHoriTileBoundary))
                 iPredBefore[i][1] = *(p0 + 16);
             if ((right || bVertTileBoundary) && (bottom || bHoriTileBoundary))
                 COMPUTE_CORNER_PRED_DIFF(p0 - 64 + 48, iPredBefore[i][1]);
@@ -863,23 +863,23 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
             {
                 if ((topORbottom || bHoriTileBoundary) && !bVertTileBoundary)
                 {
-                    if (top || bHoriTileBoundary) 
+                    if (top || bHoriTileBoundary)
                         strPre2(p1 - 32, p1);
-                    if (bottom || bHoriTileBoundary) 
+                    if (bottom || bHoriTileBoundary)
                         strPre2(p0 + 16 - 32, p0 + 16);
                 }
                 else if (!topORbottom && !bHoriTileBoundary && !bVertTileBoundary)
                     strPre2x2(p0 - 16, p0 + 16, p1 - 32, p1);
             }
-            if ((leftAdjacentColumn || bOneMBRightVertTB) && (top || bHoriTileBoundary)) 
+            if ((leftAdjacentColumn || bOneMBRightVertTB) && (top || bHoriTileBoundary))
                 COMPUTE_CORNER_PRED_ADD(p1 - 64 + 0, *(p1 - 64 + 32));
             if ((rightAdjacentColumn || bOneMBLeftVertTB) && (top || bHoriTileBoundary))
                 iPredAfter[i][0] = *(p1 + 0);
             if ((right || bVertTileBoundary) && (top || bHoriTileBoundary))
                 COMPUTE_CORNER_PRED_ADD(p1 - 64 + 32, iPredAfter[i][0]);
-            if ((leftAdjacentColumn || bOneMBRightVertTB) && (bottom || bHoriTileBoundary)) 
+            if ((leftAdjacentColumn || bOneMBRightVertTB) && (bottom || bHoriTileBoundary))
                 COMPUTE_CORNER_PRED_ADD(p0 - 64 + 16, *(p0 - 64 + 48));
-            if ((rightAdjacentColumn || bOneMBLeftVertTB) && (bottom || bHoriTileBoundary)) 
+            if ((rightAdjacentColumn || bOneMBLeftVertTB) && (bottom || bHoriTileBoundary))
                 iPredAfter[i][1] = *(p0 + 16);
             if ((right || bVertTileBoundary) && (bottom || bHoriTileBoundary))
                 COMPUTE_CORNER_PRED_ADD(p0 - 64 + 48, iPredAfter[i][1]);
@@ -912,7 +912,7 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
             /* Corner operations */
             if ((top || bHoriTileBoundary) && (left || bVertTileBoundary))
                 strPre4(p1 + 0, p1 + 1, p1 + 2, p1 + 3);
-            if ((top || bHoriTileBoundary) && (right || bVertTileBoundary))    
+            if ((top || bHoriTileBoundary) && (right || bVertTileBoundary))
                 strPre4(p1 - 59, p1 - 60, p1 - 57, p1 - 58);
             if ((bottom || bHoriTileBoundary) && (left || bVertTileBoundary))
                 strPre4(p0 + 48 + 10, p0 + 48 + 11, p0 + 48 + 8, p0 + 48 + 9);
@@ -995,7 +995,7 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
                     p = NULL;
                 }
             }
-        }    
+        }
 
         //================================
         // first level transform (422_UV)
@@ -1016,12 +1016,12 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
                 strDCT4x4Stage1(p1 + j + 32);
             }
         }
-        
+
         //================================
         // second level overlap (422_UV)
         if (OL_TWO == olOverlap)
         {
-            if ((leftAdjacentColumn || bOneMBRightVertTB) && (top || bHoriTileBoundary)) 
+            if ((leftAdjacentColumn || bOneMBRightVertTB) && (top || bHoriTileBoundary))
                 COMPUTE_CORNER_PRED_DIFF(p1 - 128 + 0, *(p1 - 128 + 64));
 
             if ((rightAdjacentColumn || bOneMBLeftVertTB) && (top || bHoriTileBoundary))
@@ -1029,10 +1029,10 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
             if ((right || bVertTileBoundary) && (top || bHoriTileBoundary))
                 COMPUTE_CORNER_PRED_DIFF(p1 - 128 + 64, iPredBefore[i][0]);
 
-            if ((leftAdjacentColumn || bOneMBRightVertTB) && (bottom || bHoriTileBoundary)) 
+            if ((leftAdjacentColumn || bOneMBRightVertTB) && (bottom || bHoriTileBoundary))
                 COMPUTE_CORNER_PRED_DIFF(p0 - 128 + 48, *(p0 - 128 + 112));
 
-            if ((rightAdjacentColumn || bOneMBLeftVertTB) && (bottom || bHoriTileBoundary)) 
+            if ((rightAdjacentColumn || bOneMBLeftVertTB) && (bottom || bHoriTileBoundary))
                 iPredBefore[i][1] = *(p0 + 48);
             if ((right || bVertTileBoundary) && (bottom || bHoriTileBoundary))
                 COMPUTE_CORNER_PRED_DIFF(p0 - 128 + 112, iPredBefore[i][1]);
@@ -1043,10 +1043,10 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
                 {
                     if (!top && !bHoriTileBoundary)
                     {
-                        if (left || bVertTileBoundary) 
+                        if (left || bVertTileBoundary)
                             strPre2(p0 + 48 + 0, p1 + 0);
 
-                        if (right || bVertTileBoundary) 
+                        if (right || bVertTileBoundary)
                             strPre2(p0 + 48 + -64, p1 + -64);
                     }
 
@@ -1071,7 +1071,7 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
             if ((bottom || bHoriTileBoundary) && (!leftORright && !bVertTileBoundary))
                 strPre2(p0 - 16, p0 + 48);
 
-            if ((leftAdjacentColumn || bOneMBRightVertTB) && (top || bHoriTileBoundary)) 
+            if ((leftAdjacentColumn || bOneMBRightVertTB) && (top || bHoriTileBoundary))
                 COMPUTE_CORNER_PRED_ADD(p1 - 128 + 0, *(p1 - 128 + 64));
 
             if ((rightAdjacentColumn || bOneMBLeftVertTB) && (top || bHoriTileBoundary))
@@ -1079,10 +1079,10 @@ Void transformMacroblock(CWMImageStrCodec * pSC)
             if ((right || bVertTileBoundary) && (top || bHoriTileBoundary))
                 COMPUTE_CORNER_PRED_ADD(p1 - 128 + 64, iPredAfter[i][0]);
 
-            if ((leftAdjacentColumn || bOneMBRightVertTB) && (bottom || bHoriTileBoundary)) 
+            if ((leftAdjacentColumn || bOneMBRightVertTB) && (bottom || bHoriTileBoundary))
                 COMPUTE_CORNER_PRED_ADD(p0 - 128 + 48, *(p0 - 128 + 112));
 
-            if ((rightAdjacentColumn || bOneMBLeftVertTB) && (bottom || bHoriTileBoundary)) 
+            if ((rightAdjacentColumn || bOneMBLeftVertTB) && (bottom || bHoriTileBoundary))
                 iPredAfter[i][1] = *(p0 + 48);
             if ((right || bVertTileBoundary) && (bottom || bHoriTileBoundary))
                 COMPUTE_CORNER_PRED_ADD(p0 - 128 + 112, iPredAfter[i][1]);

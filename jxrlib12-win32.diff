@@ -1,0 +1,67 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c6c9df1..5ee7f5e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -65,17 +65,17 @@ check_symbol_exists(strlcpy "string.h" HAVE_STRLCPY)
+ # JPEG-XR
+ set(SRC_SYS adapthuff.c image.c strcodec.c strPredQuant.c strTransform.c perfTimerANSI.c)
+ JXR_MAKE_OBJ(SYS)
+-set(SRC_DEC decode.c postprocess.c segdec.c strdec.c strInvTransform.c strPredQuantDec.c JXRTranscode.c)
++set(SRC_DEC decode.c postprocess.c segdec.c strdec.c strInvTransform.c strdec_x86.c strPredQuantDec.c JXRTranscode.c)
+ JXR_MAKE_OBJ(DEC)
+-set(SRC_ENC encode.c segenc.c strenc.c strFwdTransform.c strPredQuantEnc.c)
++set(SRC_ENC encode.c segenc.c strenc.c strenc_x86.c strFwdTransform.c strPredQuantEnc.c)
+ JXR_MAKE_OBJ(ENC)
+ 
+ add_library(jpegxr ${OBJ_ENC} ${OBJ_DEC} ${OBJ_SYS})
+ set_property(TARGET jpegxr
+-  PROPERTY COMPILE_DEFINITIONS __ANSI__ DISABLE_PERF_MEASUREMENT ${DEF_ENDIAN}
++  PROPERTY COMPILE_DEFINITIONS DISABLE_PERF_MEASUREMENT ENABLE_OPTIMIZATIONS WIN32 ${DEF_ENDIAN}
+ )
+ set_property(TARGET jpegxr PROPERTY LINK_INTERFACE_LIBRARIES "")
+-set_property(TARGET jpegxr PROPERTY COMPILE_FLAGS -w)
++# set_property(TARGET jpegxr PROPERTY COMPILE_FLAGS -w)
+ # VERSION/SOVERSION
+ set(JXR_VERSION "1.2")
+ set_property(TARGET jpegxr PROPERTY VERSION ${JXR_VERSION})
+@@ -94,10 +94,10 @@ JXR_MAKE_OBJ(TEST)
+ 
+ add_library(jxrglue ${OBJ_GLUE} ${OBJ_TEST})
+ set_property(TARGET jxrglue
+-  PROPERTY COMPILE_DEFINITIONS __ANSI__ DISABLE_PERF_MEASUREMENT ${DEF_ENDIAN}
++  PROPERTY COMPILE_DEFINITIONS DISABLE_PERF_MEASUREMENT ENABLE_OPTIMIZATIONS WIN32  ${DEF_ENDIAN}
+ )
+-#set_property(TARGET jxrglue PROPERTY LINK_INTERFACE_LIBRARIES "")
+-set_property(TARGET jxrglue PROPERTY COMPILE_FLAGS -w)
++# set_property(TARGET jxrglue PROPERTY LINK_INTERFACE_LIBRARIES "")
++# set_property(TARGET jxrglue PROPERTY COMPILE_FLAGS -w)
+ # VERSION/SOVERSION
+ set_property(TARGET jxrglue PROPERTY VERSION ${JXR_VERSION})
+ set_property(TARGET jxrglue PROPERTY SOVERSION 0)
+@@ -110,12 +110,12 @@ install(TARGETS jxrglue
+ #	target_link_libraries(jxrglue ${BSD_LIBRARY})
+ #endif()
+ #target_link_libraries(jxrglue m)
+-target_link_libraries(jxrglue PRIVATE jpegxr m)
++target_link_libraries(jxrglue PRIVATE jpegxr)
+ # Enc app files
+ set(ENCAPP JxrEncApp)
+ add_executable(${ENCAPP} ${DIR_EXEC}/${ENCAPP}.c)
+ set_property(TARGET ${ENCAPP}
+-  PROPERTY COMPILE_DEFINITIONS __ANSI__ DISABLE_PERF_MEASUREMENT ${DEF_ENDIAN}
++  PROPERTY COMPILE_DEFINITIONS DISABLE_PERF_MEASUREMENT ENABLE_OPTIMIZATIONS WIN32 ${DEF_ENDIAN}
+ )
+ #set_property(TARGET ${ENCAPP} PROPERTY COMPILE_FLAGS -w)
+ target_link_libraries(${ENCAPP} jxrglue) # jpegxr)
+@@ -124,9 +124,9 @@ install(TARGETS ${ENCAPP} RUNTIME DESTINATION ${JXRLIB_INSTALL_BIN_DIR})
+ set(DECAPP JxrDecApp)
+ add_executable(${DECAPP} ${DIR_EXEC}/${DECAPP}.c)
+ set_property(TARGET ${DECAPP}
+-  PROPERTY COMPILE_DEFINITIONS __ANSI__ DISABLE_PERF_MEASUREMENT ${DEF_ENDIAN}
++  PROPERTY COMPILE_DEFINITIONS DISABLE_PERF_MEASUREMENT ENABLE_OPTIMIZATIONS WIN32 ${DEF_ENDIAN}
+ )
+-set_property(TARGET ${DECAPP} PROPERTY COMPILE_FLAGS -w)
++# set_property(TARGET ${DECAPP} PROPERTY COMPILE_FLAGS -w)
+ target_link_libraries(${DECAPP} jxrglue) # jpegxr)
+ install(TARGETS ${DECAPP} RUNTIME DESTINATION ${JXRLIB_INSTALL_BIN_DIR})
+ 

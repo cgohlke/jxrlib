@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -47,13 +47,13 @@
 #define BI_RGB101010_MASK_G 0x000FFC00
 #define BI_RGB101010_MASK_R 0x3FF00000
 
-typedef struct tagBITMAPFILEHEADER { 
+typedef struct tagBITMAPFILEHEADER {
     U8 szBM[2];
     U32 uSize;
     U16 reserved1;
     U16 reserved2;
     U32 uOffBits;
-} BITMAPFILEHEADER, *PBITMAPFILEHEADER; 
+} BITMAPFILEHEADER, *PBITMAPFILEHEADER;
 
 typedef struct tagBITMAPINFOHEADER{
     U32 uSize;
@@ -104,7 +104,7 @@ ERR WriteBMPHeader(
         pIE->cbPixel = 3;
         cbColorTable = 0;
     }
-    else if (IsEqualGUID(&GUID_PKPixelFormat32bppBGRA, &pIE->guidPixFormat) 
+    else if (IsEqualGUID(&GUID_PKPixelFormat32bppBGRA, &pIE->guidPixFormat)
         || IsEqualGUID(&GUID_PKPixelFormat32bppBGR, &pIE->guidPixFormat)
         || IsEqualGUID(&GUID_PKPixelFormat32bppPBGRA, &pIE->guidPixFormat))
     {
@@ -150,7 +150,7 @@ ERR WriteBMPHeader(
         rguColorTable[0] = BI_RGB101010_MASK_R;
         rguColorTable[1] = BI_RGB101010_MASK_G;
         rguColorTable[2] = BI_RGB101010_MASK_B;
-    }            
+    }
     else
         Call(WMP_errUnsupportedFormat);
 
@@ -275,7 +275,7 @@ ERR ParseBMPHeader(
                 U32 c = i | (i << 8) | (i << 16);
                 FailIf(c != rguColorTable[i], WMP_errUnsupportedFormat);
             }
-            
+
             pID->guidPixFormat = GUID_PKPixelFormat8bppGray;
             pID->EXT.BMP.cbPixel = 1;
             break;
@@ -296,7 +296,7 @@ ERR ParseBMPHeader(
             }
             pID->EXT.BMP.cbPixel = 2;
             break;
-            
+
         case 24:
             pID->guidPixFormat = GUID_PKPixelFormat24bppBGR;
             pID->EXT.BMP.cbPixel = 3;
@@ -314,7 +314,7 @@ ERR ParseBMPHeader(
             }
             pID->EXT.BMP.cbPixel = 4;
             break;
-            
+
         default:
             Call(WMP_errUnsupportedFormat);
             break;
@@ -325,7 +325,7 @@ ERR ParseBMPHeader(
 
     pID->fResX = (0 == bmpIH.iPelsPerMeterX ? 96 : (Float)(bmpIH.iPelsPerMeterX * .0254));
     pID->fResY = (0 == bmpIH.iPelsPerMeterY ? 96 : (Float)(bmpIH.iPelsPerMeterY * .0254));
-    
+
     pID->EXT.BMP.offPixel = pID->offStart + bmpFH.uOffBits;
 
 Cleanup:
@@ -357,7 +357,7 @@ ERR PKImageDecode_Copy_BMP(
 
     size_t cbLineS = (pID->EXT.BMP.cbPixel * pID->uWidth + 3) / 4 * 4;
     size_t cbLineM = pID->EXT.BMP.cbPixel * pRect->Width;
-    
+
     I32 i = 0;
 
     //FailIf(pRect->X < 0 || pID->uWidth <= pRect->X, WMP_errInvalidParameter);

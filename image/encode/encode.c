@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -53,7 +53,7 @@ Int AllocateCodingContextEnc(CWMImageStrCodec *pSC, Int iNumContexts, Int iTrimF
     if (iTrimFlexBits < 0)
         iTrimFlexBits = 0;
     else if (iTrimFlexBits > 15)
-        iTrimFlexBits = 15;    
+        iTrimFlexBits = 15;
     pSC->m_param.bTrimFlexbitsFlag = (iTrimFlexBits > 0);
 
     if (iNumContexts < 1 || iNumContexts > MAX_TILES)  // only between 1 and 256 allowed
@@ -77,7 +77,7 @@ Int AllocateCodingContextEnc(CWMImageStrCodec *pSC, Int iNumContexts, Int iTrimF
     for (i = 0; i < iNumContexts; i++) {
         CCodingContext *pContext = &(pSC->m_pCodingContext[i]);
 
-        /** allocate adaptive Huffman encoder **/    
+        /** allocate adaptive Huffman encoder **/
         pContext->m_pAdaptHuffCBPCY = Allocate (iCBPSize, ENCODER);
         if(pContext->m_pAdaptHuffCBPCY == NULL) {
             return ICERR_ERROR;

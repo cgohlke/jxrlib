@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -32,9 +32,9 @@
 //================================================================
 // main function
 //================================================================
-int 
+int
 #ifndef __ANSI__
-__cdecl 
+__cdecl
 #endif // __ANSI__
 main(int argc, char* argv[])
 {
@@ -73,16 +73,16 @@ main(int argc, char* argv[])
 
         Call( GetTestEncodeIID(".iyuv", &pIID) );
         Call( PKTestFactory_CreateCodec(pIID, (void **) &pEncoder) );
-        
+
         // check that pixel format is YCC 4:2:0
         PKPixelFormatGUID pix_frmt;
         Call( pDecoder->GetPixelFormat(pDecoder, &pix_frmt) );
-        if( memcmp(&pix_frmt, &GUID_PKPixelFormat12bppYCC420, 
+        if( memcmp(&pix_frmt, &GUID_PKPixelFormat12bppYCC420,
                    sizeof(PKPixelFormatGUID)) != 0 ) {
             err = WMP_errFail;
             goto Cleanup;
         }
-        
+
         // get the dimensions
         Call( pDecoder->GetSize(pDecoder, &width, &height) );
 		yuv_size = width*height+2*(width>>1)*(height>>1);
@@ -93,7 +93,7 @@ main(int argc, char* argv[])
         rc.Y = 0;
         rc.Width  = width;
         rc.Height = height;
-    
+
         image_buffer = (U8*)malloc(yuv_size);
         Call( pDecoder->Copy(pDecoder, &rc, (U8*)image_buffer, width*3) );
 
@@ -102,7 +102,7 @@ main(int argc, char* argv[])
         Call( pEncoder->SetPixelFormat(pEncoder, pix_frmt));
         Call( pEncoder->SetSize(pEncoder, width, height));
         Call( pEncoder->WritePixels(pEncoder, height, image_buffer, width) );
-    
+
     Cleanup:
         if( pDecoder )      pDecoder->Release(&pDecoder);
         if( pEncoder )      pEncoder->Release(&pEncoder);

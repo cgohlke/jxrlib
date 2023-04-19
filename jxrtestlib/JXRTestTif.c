@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -151,7 +151,7 @@ ERR WriteTifDE(
                 Call(PutTifUShort(pS, offPos, 0)); offPos += 2;
                 break;
             }
-            
+
         case TIF_typLONG:
         case TIF_typRATIOAL:
             Call(PutTifULong(pS, offPos, pDE->uValueOrOffset)); offPos += 4;
@@ -180,7 +180,7 @@ ERR WriteTifHeader(
 #endif // _BIG__ENDIAN_
 
     TifDEMisc tifDEMisc = {
-        (U32) -1, (U32) -1, (U32) -1, (U32) -1, (U32) -1, 
+        (U32) -1, (U32) -1, (U32) -1, (U32) -1, (U32) -1,
         2, // photometric interpretation
         (U32) -1, 10000, 10000,
         (U32) -1, 10000, 10000,
@@ -203,7 +203,7 @@ ERR WriteTifHeader(
         {0x11b, 5,  1, (U32) -1}, // TIF_tagYResolution
         {0x11c, 3,  1,  1}, // TIF_tagPlanarConfiguration
         {0x128, 3,  1,  2}, // TIF_tagResolutionUnit
-        {0x153, 3, (U32) -1, (U32) -1}, // TIF_tagSampleFormat 
+        {0x153, 3, (U32) -1, (U32) -1}, // TIF_tagSampleFormat
 //        {0x131, 2,  -1, -1}, // TIF_tagSoftware
 //        {0x140, 3,  -1, -1}, // TIF_tagColorMap
     };
@@ -264,7 +264,7 @@ ERR WriteTifHeader(
     assert(TIF_tagImageLength == tifDE.uTag);
     tifDE.uValueOrOffset = pIE->uHeight;
     Call(WriteTifDE(pS, offPos, &tifDE)); offPos += 12;
-    
+
     tifDE = tifDEs[i++];
     assert(TIF_tagBitsPerSample == tifDE.uTag);
     tifDE.uCount = tifDEMisc.spp;
@@ -301,7 +301,7 @@ ERR WriteTifHeader(
 
     tifDE = tifDEs[i++];
     assert(TIF_tagStripByteCounts == tifDE.uTag);
-    cbLine = (BD_1 == PI.bdBitDepth ? ((PI.cbitUnit * pIE->uWidth + 7) >> 3) : (((PI.cbitUnit + 7) >> 3) * pIE->uWidth)); 
+    cbLine = (BD_1 == PI.bdBitDepth ? ((PI.cbitUnit * pIE->uWidth + 7) >> 3) : (((PI.cbitUnit + 7) >> 3) * pIE->uWidth));
     tifDE.uValueOrOffset = (U32)(cbLine * pIE->uHeight);
     Call(WriteTifDE(pS, offPos, &tifDE)); offPos += 12;
 
@@ -314,7 +314,7 @@ ERR WriteTifHeader(
     assert(TIF_tagYResolution == tifDE.uTag);
     tifDE.uValueOrOffset = tifDEMisc.offYResolution;
     Call(WriteTifDE(pS, offPos, &tifDE)); offPos += 12;
-   
+
     tifDE = tifDEs[i++];
     assert(TIF_tagPlanarConfiguration == tifDE.uTag);
     Call(WriteTifDE(pS, offPos, &tifDE)); offPos += 12;
@@ -371,7 +371,7 @@ ERR WriteTifHeader(
             Call(PutTifUShort(pS, offPos, (U16)tifDEMisc.sf)); offPos += 2;
         }
     }
-    
+
     assert(tifDEMisc.offXResolution == offPos);
     Call(PutTifULong(pS, offPos, tifDEMisc.resXF)); offPos += 4;
     Call(PutTifULong(pS, offPos, tifDEMisc.resXD)); offPos += 4;
@@ -415,7 +415,7 @@ ERR PKImageEncode_WritePixels_TIF(
     PI.pGUIDPixFmt = &pIE->guidPixFormat;
     PixelFormatLookup(&PI, LOOKUP_FORWARD);
 
-    cbLine = (BD_1 == PI.bdBitDepth ? ((PI.cbitUnit * pIE->uWidth + 7) >> 3) : (((PI.cbitUnit + 7) >> 3) * pIE->uWidth)); 
+    cbLine = (BD_1 == PI.bdBitDepth ? ((PI.cbitUnit * pIE->uWidth + 7) >> 3) : (((PI.cbitUnit + 7) >> 3) * pIE->uWidth));
 
     FailIf(cbStride < cbLine, WMP_errInvalidParameter);
 
@@ -584,7 +584,7 @@ ERR ParseTifDEValue(
         case TIF_tagBitsPerSample:
             if (1 == uCount)
             {
-                pID->EXT.TIF.uBitsPerSample = uValue0; 
+                pID->EXT.TIF.uBitsPerSample = uValue0;
             }
             else
             {
@@ -616,7 +616,7 @@ ERR ParseTifDEValue(
         case TIF_tagSampleFormat:
             if (1 == uCount)
             {
-                pID->EXT.TIF.uSampleFormat = uValue0; 
+                pID->EXT.TIF.uSampleFormat = uValue0;
             }
             else
             {
@@ -645,12 +645,12 @@ ERR ParseTifDEValue(
             break;
 
         case TIF_tagPhotometricInterpretation:
-            Test(PK_PI_W0 == uValue0 || PK_PI_B0 == uValue0 || PK_PI_RGB == uValue0 
+            Test(PK_PI_W0 == uValue0 || PK_PI_B0 == uValue0 || PK_PI_RGB == uValue0
                 || PK_PI_RGBPalette == uValue0 || PK_PI_TransparencyMask == uValue0
                 || PK_PI_CMYK == uValue0 || PK_PI_YCbCr == uValue0
                 || PK_PI_CIELab == uValue0, WMP_errUnsupportedFormat);
 
-            pID->EXT.TIF.uInterpretation = uValue0; 
+            pID->EXT.TIF.uInterpretation = uValue0;
             break;
 
         case TIF_tagStripOffsets:
@@ -761,7 +761,7 @@ ERR ParseTifHeader(
     pID->EXT.TIF.uResolutionUnit = 2;
     pID->EXT.TIF.fResX = 96;
     pID->EXT.TIF.fResY = 96;
-    
+
     //================================
     Call(pWS->GetPos(pWS, &offPosBase));
     FailIf(0 != offPosBase, WMP_errUnsupportedFormat);
@@ -805,7 +805,7 @@ ERR ParseTifHeader(
     if(pID->EXT.TIF.uRowsPerStrip == -1)
         pID->EXT.TIF.uRowsPerStrip = pID->uHeight;//default
 
-    FailIf((-1 == pID->EXT.TIF.uInterpretation 
+    FailIf((-1 == pID->EXT.TIF.uInterpretation
         || -1 == pID->EXT.TIF.uSamplePerPixel
         || -1 == pID->EXT.TIF.uBitsPerSample), WMP_errUnsupportedFormat);
 
@@ -852,10 +852,10 @@ ERR GetScanLineOffset(
     U32 cbLine,
     U32 *offLine)
 {
-    *offLine = pID->EXT.TIF.uRowsPerStrip ? 
+    *offLine = pID->EXT.TIF.uRowsPerStrip ?
         (pID->EXT.TIF.uStripOffsets[iLine / pID->EXT.TIF.uRowsPerStrip] +
         cbLine * (iLine % pID->EXT.TIF.uRowsPerStrip)) :
-        0;        
+        0;
 
     return WMP_errSuccess;
 }
@@ -876,7 +876,7 @@ ERR PKImageDecode_Copy_TIF(
     PI.pGUIDPixFmt = &pID->guidPixFormat;
     PixelFormatLookup(&PI, LOOKUP_FORWARD);
 
-    cbLine = (BD_1 == PI.bdBitDepth ? ((PI.cbitUnit * pRect->Width + 7) >> 3) : (((PI.cbitUnit + 7) >> 3) * pRect->Width)); 
+    cbLine = (BD_1 == PI.bdBitDepth ? ((PI.cbitUnit * pRect->Width + 7) >> 3) : (((PI.cbitUnit + 7) >> 3) * pRect->Width));
 
     assert(0 == pRect->X && pID->uWidth == (U32)pRect->Width);
     assert(cbLine <= cbStride);
@@ -889,7 +889,7 @@ ERR PKImageDecode_Copy_TIF(
         Call(pS->SetPos(pS, offPixels));
         Call(pS->Read(pS, pb + cbStride * i, cbLine));
 
-        if (PK_PI_W0 == pID->EXT.TIF.uInterpretation) 
+        if (PK_PI_W0 == pID->EXT.TIF.uInterpretation)
         {
             U32 j, begin = cbStride * (U32)i, end = begin + cbLine;
             for (j = begin; j < end; ++j)

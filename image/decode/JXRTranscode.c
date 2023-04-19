@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -140,7 +140,7 @@ Void transcodeTileHeader(CWMImageStrCodec * pSC, CTileQPInfo * pTileQPInfo)
         writePacketHeader(pContext->m_pIODC, pSC->WMISCP.bfBitstreamFormat == SPATIAL ? 0 : 1, pID);
         if (pSC->m_param.bTrimFlexbitsFlag && pSC->WMISCP.bfBitstreamFormat == SPATIAL)
             putBit16(pContext->m_pIODC, pContext->m_iTrimFlexBits, 4);
-        
+
         if((pSC->m_param.uQPMode & 1) != 0) // not DC uniform
             transcodeQuantizer(pContext->m_pIODC, pTileQPInfo->dcIndex, pTileQPInfo->dcMode, pSC->WMISCP.cChannel);
         if(pSCAlpha != NULL && (pSCAlpha->m_param.uQPMode & 1) != 0) // not DC uniform
@@ -253,7 +253,7 @@ Void transformACBlocks(PixelI * pOrg, PixelI * pDst, ORIENTATION oOrientation)
         if(bFlipV[oOrientation])
             for(i = 0; i < 16; i += 4)
                 pO[pT[i + 1]] = -pO[pT[i + 1]], pO[pT[i + 3]] = -pO[pT[i + 3]];
-        
+
         if(bFlipH[oOrientation])
             for(i = 0; i < 4; i ++)
                 pO[pT[i + 4]] = -pO[pT[i + 4]], pO[pT[i + 12]] = -pO[pT[i + 12]];
@@ -287,7 +287,7 @@ Void transformACBlocks422(PixelI * pOrg, PixelI * pDst, ORIENTATION oOrientation
         if(bFlipV[oOrientation])
             for(i = 0; i < 16; i += 4)
                 pO[pT[i + 1]] = -pO[pT[i + 1]], pO[pT[i + 3]] = -pO[pT[i + 3]];
-        
+
         if(bFlipH[oOrientation])
             for(i = 0; i < 4; i ++)
                 pO[pT[i + 4]] = -pO[pT[i + 4]], pO[pT[i + 12]] = -pO[pT[i + 12]];
@@ -312,7 +312,7 @@ Void transformACBlocks420(PixelI * pOrg, PixelI * pDst, ORIENTATION oOrientation
         if(bFlipV[oOrientation])
             for(i = 0; i < 16; i += 4)
                 pO[pT[i + 1]] = -pO[pT[i + 1]], pO[pT[i + 3]] = -pO[pT[i + 3]];
-        
+
         if(bFlipH[oOrientation])
             for(i = 0; i < 4; i ++)
                 pO[pT[i + 4]] = -pO[pT[i + 4]], pO[pT[i + 12]] = -pO[pT[i + 12]];
@@ -343,7 +343,7 @@ Int getROI(CWMImageInfo * pII, CCoreParameters * pCore, CWMIStrCodecParam * pSCP
 
     if(iTile == NULL)
         return ICERR_ERROR;
-    
+
     if(pParam->cLeftX + pParam->cWidth > pII->cWidth || pParam->cTopY + pParam->cHeight > pII->cHeight) // invalid region
         return ICERR_ERROR;
 
@@ -445,7 +445,7 @@ Int getROI(CWMImageInfo * pII, CCoreParameters * pCore, CWMIStrCodecParam * pSCP
 Bool isTileBoundary(U32 * pTilePos, U32 cTiles, U32 cMBs, U32 iPos)
 {
     U32 i;
-    
+
     for(i = 0; i < cTiles; i ++)
         if(iPos == pTilePos[i] * 16)
             break;
@@ -532,7 +532,7 @@ Int WMPhotoTranscode(struct WMPStream * pStreamIn, struct WMPStream * pStreamOut
         pSCDec->m_pNextSC->WMISCP.cChannel  = pSCDec->m_pNextSC->m_param.cNumChannels = 1;
         pSCDec->m_pNextSC->m_bSecondary = TRUE;
         pSCDec->m_pNextSC->m_pNextSC = pSCDec;
- 
+
         // read plane header of second image plane
         if(attach_SB(&SB, pSCDec->WMISCP.pWStream) != ICERR_OK)
             return ICERR_ERROR;
@@ -550,7 +550,7 @@ Int WMPhotoTranscode(struct WMPStream * pStreamIn, struct WMPStream * pStreamOut
         return ICERR_ERROR;
     memset(pIOHeaderDec, 0, (PACKETLENGTH * 4 - 1) + PACKETLENGTH * 4 + sizeof(BitIOInfo));
     pSCDec->pIOHeader = (BitIOInfo *)((U8 *)ALIGNUP(pIOHeaderDec, PACKETLENGTH * 4) + PACKETLENGTH * 2);
-    
+
     if(StrIODecInit(pSCDec) != ICERR_OK)
         return ICERR_ERROR;
 
@@ -588,10 +588,10 @@ Int WMPhotoTranscode(struct WMPStream * pStreamIn, struct WMPStream * pStreamOut
         return ICERR_ERROR;
     memset(pIOHeaderEnc, 0, (PACKETLENGTH * 4 - 1) + PACKETLENGTH * 4 + sizeof(BitIOInfo));
     pSCEnc->pIOHeader = (BitIOInfo *)((U8 *)ALIGNUP(pIOHeaderEnc, PACKETLENGTH * 4) + PACKETLENGTH * 2);
-    
+
     for(i = 0; i < pSCEnc->m_param.cNumChannels; i ++)
         pSCEnc->pPlane[i] = pSCDec->p1MBbuffer[i];
-    
+
     for(i = 1; i < pSCDec->cNumBitIO * (pSCDec->WMISCP.cNumOfSliceMinus1H + 1); i ++){
         if(pSCDec->pIndexTable[i] == 0 && i + 1 != pSCDec->cNumBitIO * (pSCDec->WMISCP.cNumOfSliceMinus1H + 1)) // empty packet
             pSCDec->pIndexTable[i] = pSCDec->pIndexTable[i + 1];
@@ -647,7 +647,7 @@ Int WMPhotoTranscode(struct WMPStream * pStreamIn, struct WMPStream * pStreamOut
         pSCEnc->WMII.oOrientation = oO ^ ((pSCEnc->WMII.oOrientation & 1) * 2 + (pSCEnc->WMII.oOrientation >> 1));
     else
         pSCEnc->WMII.oOrientation ^= ((oO & 1) * 2 + (oO >> 1));
-    
+
 //    pSCEnc->WMISCP.nExpBias += 128;
 
     if(pParam->bIgnoreOverlap == TRUE){
@@ -661,7 +661,7 @@ Int WMPhotoTranscode(struct WMPStream * pStreamIn, struct WMPStream * pStreamOut
         pTileQPInfo = (CTileQPInfo *)malloc((oO == O_NONE ? 1 : (pSCEnc->WMISCP.cNumOfSliceMinus1H + 1) * (pSCEnc->WMISCP.cNumOfSliceMinus1V + 1)) * sizeof( CTileQPInfo));
         if(pTileQPInfo == NULL || ((oO == O_NONE ? 1 : (pSCEnc->WMISCP.cNumOfSliceMinus1H + 1) * (pSCEnc->WMISCP.cNumOfSliceMinus1V + 1)) * sizeof( CTileQPInfo) < (oO == O_NONE ? 1 : (pSCEnc->WMISCP.cNumOfSliceMinus1H + 1) * (pSCEnc->WMISCP.cNumOfSliceMinus1V + 1))))
             return ICERR_ERROR;
-        
+
         if(StrEncInit(pSCEnc) != ICERR_OK)
             return ICERR_ERROR;
     }
@@ -699,10 +699,10 @@ Int WMPhotoTranscode(struct WMPStream * pStreamIn, struct WMPStream * pStreamOut
             return ICERR_ERROR;
 
         pSCEnc->cNumBitIO = cfEnc * (pSCEnc->WMISCP.cNumOfSliceMinus1V + 1);
-        
+
         for(j = 0; j <= pSCDec->WMISCP.cNumOfSliceMinus1H; j ++){
             for(i = 0; i <= pSCDec->WMISCP.cNumOfSliceMinus1V; i ++)
-                if(pSCDec->WMISCP.uiTileX[i] >= mbLeft && pSCDec->WMISCP.uiTileX[i] < mbRight && 
+                if(pSCDec->WMISCP.uiTileX[i] >= mbLeft && pSCDec->WMISCP.uiTileX[i] < mbRight &&
                     pSCDec->WMISCP.uiTileY[j] >= mbTop && pSCDec->WMISCP.uiTileY[j] < mbBottom){
                         for(k = 0; k < cfEnc; k ++, l ++)
                             pSCEnc->pIndexTable[l] = pSCDec->pIndexTable[(j * (pSCDec->WMISCP.cNumOfSliceMinus1V + 1) + i) * cfDec + k + 1] - pSCDec->pIndexTable[(j * (pSCDec->WMISCP.cNumOfSliceMinus1V + 1) + i) * cfDec + k];
@@ -716,12 +716,12 @@ Int WMPhotoTranscode(struct WMPStream * pStreamIn, struct WMPStream * pStreamOut
         }
         else
             writeIndexTable(pSCEnc);
-                
+
         detachISWrite(pSCEnc, pSCEnc->pIOHeader);
 
         for(j = l = 0; j <= pSCDec->WMISCP.cNumOfSliceMinus1H; j ++){
             for(i = 0; i <= pSCDec->WMISCP.cNumOfSliceMinus1V; i ++)
-                if(pSCDec->WMISCP.uiTileX[i] >= mbLeft && pSCDec->WMISCP.uiTileX[i] < mbRight && 
+                if(pSCDec->WMISCP.uiTileX[i] >= mbLeft && pSCDec->WMISCP.uiTileX[i] < mbRight &&
                     pSCDec->WMISCP.uiTileY[j] >= mbTop && pSCDec->WMISCP.uiTileY[j] < mbBottom){
                         for(k = 0; k < cfEnc; k ++){
                             pSCDec->WMISCP.pWStream->SetPos(pSCDec->WMISCP.pWStream, pSCDec->pIndexTable[(j * (pSCDec->WMISCP.cNumOfSliceMinus1V + 1) + i) * cfDec + k] + pSCDec->cHeaderSize);
@@ -739,7 +739,7 @@ Int WMPhotoTranscode(struct WMPStream * pStreamIn, struct WMPStream * pStreamOut
         for(pSCDec->cColumn = 0; pSCDec->cColumn < pSCDec->cmbWidth; pSCDec->cColumn ++){
             Int cRow = (Int)pSCDec->cRow, cColumn = (Int)pSCDec->cColumn;
             CWMITile * pTile;
-            
+
             memset(pMBBuf, 0, sizeof(PixelI) * cUnit);
             if(pSCDec->m_param.bAlphaChannel){ // alpha channel
                 memset(pSCDec->m_pNextSC->p1MBbuffer[0], 0, sizeof(PixelI) * 256);
@@ -755,15 +755,15 @@ Int WMPhotoTranscode(struct WMPStream * pStreamIn, struct WMPStream * pStreamOut
                     pSCDec->m_pNextSC->cTileColumn = pSCDec->cTileColumn;
                     pSCDec->m_pNextSC->cTileRow = pSCDec->cTileRow;
                 }
-                
+
                 if(readPackets(pSCDec) != ICERR_OK)
                     return ICERR_ERROR;
 
                 pContext = &pSCDec->m_pCodingContext[pSCDec->cTileColumn];
-                
+
                 if(DecodeMacroblockDC(pSCDec, pContext, cColumn, cRow) != ICERR_OK)
                     return ICERR_ERROR;
-                
+
                 if(pSCDec->cSB > 1)
                     if(DecodeMacroblockLowpass(pSCDec, pContext, cColumn, cRow) != ICERR_OK)
                         return ICERR_ERROR;
@@ -775,7 +775,7 @@ Int WMPhotoTranscode(struct WMPStream * pStreamIn, struct WMPStream * pStreamOut
                         return ICERR_ERROR;
 
                 predACDec(pSCDec);
-                
+
                 updatePredInfo(pSCDec, &pSCDec->MBInfo, cColumn, pSCDec->WMISCP.cfColorFormat);
 
                 pSCDec = pSCDec->m_pNextSC;
@@ -806,16 +806,16 @@ Int WMPhotoTranscode(struct WMPStream * pStreamIn, struct WMPStream * pStreamOut
 
                 if(pSCEnc->m_bCtxLeft && pSCEnc->m_bCtxTop){ // a new tile, buffer tile DQuant info
                     CTileQPInfo * pTmp = pTileQPInfo;
-                    
+
                     pTile = pSCDec->pTile + pSCDec->cTileColumn;
-                    
+
                     if(oO != O_NONE)
                         pTmp += pSCEnc->cTileRow * (pSCEnc->WMISCP.cNumOfSliceMinus1V + 1) + pSCEnc->cTileColumn;
-                    
+
                     pTmp->dcMode = pTile->cChModeDC;
                     for(i = 0; i < pSCEnc->WMISCP.cChannel; i ++)
                         pTmp->dcIndex[i] = pTile->pQuantizerDC[i][0].iIndex;
-                    
+
                     if(pSCEnc->WMISCP.sbSubband != SB_DC_ONLY){
                         pTmp->bUseDC = pTile->bUseDC;
                         pTmp->lpNum = pTile->cNumQPLP;
@@ -825,7 +825,7 @@ Int WMPhotoTranscode(struct WMPStream * pStreamIn, struct WMPStream * pStreamOut
                                 for(i = 0; i < pSCEnc->WMISCP.cChannel; i ++)
                                     pTmp->lpIndex[j][i] = pTile->pQuantizerLP[i][j].iIndex;
                             }
-                            
+
                             if(pSCEnc->WMISCP.sbSubband != SB_NO_HIGHPASS){
                                 pTmp->bUseLP = pTile->bUseLP;
                                 pTmp->hpNum = pTile->cNumQPHP;
@@ -867,7 +867,7 @@ Int WMPhotoTranscode(struct WMPStream * pStreamIn, struct WMPStream * pStreamOut
                     pSCEnc->MBInfo = pSCDec->MBInfo;
 
                     getTilePos(pSCEnc, cColumn, cRow);
-                    
+
                     if(pSCEnc->m_bCtxLeft && pSCEnc->m_bCtxTop)
                         transcodeTileHeader(pSCEnc, pTileQPInfo);
 
@@ -891,7 +891,7 @@ Int WMPhotoTranscode(struct WMPStream * pStreamIn, struct WMPStream * pStreamOut
 
                     if(pParam->uAlphaMode > 0){
                         pMBInfoAlpha[cOff] = pSCDec->m_pNextSC->MBInfo;
-                        
+
                         memcpy(&pFrameBufAlpha[cOff * 256], MBBufAlpha, 256 * sizeof(PixelI));
                     }
                 }
@@ -909,7 +909,7 @@ Int WMPhotoTranscode(struct WMPStream * pStreamIn, struct WMPStream * pStreamOut
             for(pSCEnc->cColumn = 1; pSCEnc->cColumn <= pSCEnc->cmbWidth; pSCEnc->cColumn ++){
                 Int cRow, cColumn;
                 size_t cOff = (pSCEnc->cRow - 1) * pSCEnc->cmbWidth + pSCEnc->cColumn - 1;
-                
+
                 for(i = 0; i < ((pSCEnc->m_param.cfColorFormat == YUV_420 || pSCEnc->m_param.cfColorFormat == YUV_422) ? 1 : pSCEnc->m_param.cNumChannels); i ++){
                     transformDCBlock(pMBInfo[cOff].iBlockDC[i], pSCEnc->MBInfo.iBlockDC[i], oO);
                     transformACBlocks(pFrameBuf + cOff * cUnit + i * 256, pMBBuf + 256 * i, oO);
@@ -936,7 +936,7 @@ Int WMPhotoTranscode(struct WMPStream * pStreamIn, struct WMPStream * pStreamOut
                     transcodeTileHeader(pSCEnc, pTileQPInfo + pSCEnc->cTileRow * (pSCEnc->WMISCP.cNumOfSliceMinus1V + 1) + pSCEnc->cTileColumn);
                 if(encodeMB(pSCEnc, cColumn, cRow) != ICERR_OK)
                     return ICERR_ERROR;
-                
+
                 if(pParam->uAlphaMode > 0){
                     pSCEnc->m_pNextSC->cColumn = pSCEnc->cColumn;
                     pSCEnc->m_pNextSC->cRow = pSCEnc->cRow;

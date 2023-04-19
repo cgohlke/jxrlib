@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -45,7 +45,7 @@
 #else
 // ANSI
 #include <time.h>
-#endif  
+#endif
 
 Int grgiZigzagInv4x4_lowpass [] = {
     0, 1, 4, 5, 2, 8, 6, 9,
@@ -59,12 +59,12 @@ Int grgiZigzagInv4x4H [] = {
 Int grgiZigzagInv4x4V [] = {
     0, 4, 8, 5,  1, 12, 9, 6,  2, 13, 3, 15,  7, 10, 14, 11
 };
-    
-const Int gSignificantRunBin[] = { 
+
+const Int gSignificantRunBin[] = {
     -1,-1,-1,-1,
     2,2,2,
     1,1,1,1,
-    0,0,0,0    
+    0,0,0,0
 };
 
 const Int gSignificantRunFixedLength[] = {
@@ -148,14 +148,14 @@ Void UpdateModelMB (COLORFORMAT cf, Int iChannels, Int iLaplacianMean[], CAdapti
 Void ResetCodingContext(CCodingContext *pContext)
 {
     // reset bit reduction models
-    memset (&(pContext->m_aModelAC), 0, sizeof(CAdaptiveModel));  
+    memset (&(pContext->m_aModelAC), 0, sizeof(CAdaptiveModel));
     pContext->m_aModelAC.m_band = BAND_AC;
 
-    memset (&(pContext->m_aModelLP), 0, sizeof(CAdaptiveModel));  
+    memset (&(pContext->m_aModelLP), 0, sizeof(CAdaptiveModel));
     pContext->m_aModelLP.m_band = BAND_LP;
     pContext->m_aModelLP.m_iFlcBits[0] = pContext->m_aModelLP.m_iFlcBits[1] = 4;
 
-    memset (&(pContext->m_aModelDC), 0, sizeof(CAdaptiveModel));  
+    memset (&(pContext->m_aModelDC), 0, sizeof(CAdaptiveModel));
     pContext->m_aModelDC.m_band = BAND_DC;
     pContext->m_aModelDC.m_iFlcBits[0] = pContext->m_aModelDC.m_iFlcBits[1] = 8;
 

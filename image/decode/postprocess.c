@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -33,7 +33,7 @@ Void smoothMB(PixelI * p1, PixelI * p0, PixelI * q0, PixelI * q1)
 {
     //  p1 p0 | q0 q1
     PixelI delta = ((((*q0 - *p0) << 2) + (*p1 - *q1)) >> 3);
-    
+
     *q0 -= delta;
     *p0 += delta;
 }
@@ -54,7 +54,7 @@ Int initPostProc(struct tagPostProcInfo * strPostProcInfo[MAX_CHANNELS][2], size
 {
     size_t i, j, k, l;
     Bool b32bit = sizeof(int) == 4;
-    
+
     for(j = 0; j < iNumChannels; j ++){
         for(i = 0; i < 2; i ++){
             // 2 more are allocated to avoid boundary check
@@ -67,7 +67,7 @@ Int initPostProc(struct tagPostProcInfo * strPostProcInfo[MAX_CHANNELS][2], size
                 return ICERR_ERROR;
             }
             strPostProcInfo[j][i] ++;
-            
+
             // initialize out-of-bound MBs as bumpy (no post at all) to avoid boundary check
             // left boundary
             strPostProcInfo[j][i][-1].ucMBTexture = 3;
@@ -113,7 +113,7 @@ Void slideOneMBRow(struct tagPostProcInfo * strPostProcInfo[MAX_CHANNELS][2], si
                 strPostProcInfo[i][0][j] = strPostProcInfo[i][0][-1]; // set as bumpy
             }
         }
-        
+
         if(bottom){ // if bottom bottom row, set current row of MBs (out of boundary) as bumpy
             for(j = 0; j < mbWidth; j ++){
                 strPostProcInfo[i][1][j] = strPostProcInfo[i][1][-1]; // set as bumpy
@@ -196,12 +196,12 @@ Void postProcMB(struct tagPostProcInfo * strPostProcInfo[MAX_CHANNELS][2], Pixel
     }
 
     /* update DCs of blocks */
-    // MB d 
+    // MB d
     pMBd->iBlockDC[0][0] = p1[0 * 16];
     pMBd->iBlockDC[0][1] = p1[4 * 16];
     pMBd->iBlockDC[1][0] = p1[1 * 16];
     pMBd->iBlockDC[1][1] = p1[5 * 16];
-    
+
     // MB b
     pMBb->iBlockDC[2][0] = p0[2 * 16];
     pMBb->iBlockDC[2][1] = p0[6 * 16];
@@ -243,7 +243,7 @@ Void postProcBlock(struct tagPostProcInfo * strPostProcInfo[MAX_CHANNELS][2], Pi
             dc[j][i] = pMBa->iBlockDC[j][i];
             texture[j][i] = pMBa->ucBlockTexture[j][i];
         }
-        
+
         // 4 blocks from MB c
         dc[4][j] = pMBc->iBlockDC[0][j];
         texture[4][j] = pMBc->ucBlockTexture[0][j];

@@ -1,17 +1,17 @@
 //*@@@+++@@@@******************************************************************
 //
-// Copyright © Microsoft Corp.
+// Copyright (c) Microsoft Corp.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-// • Redistributions of source code must retain the above copyright notice,
+//
+// * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// • Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -214,15 +214,15 @@ ERR ParsePNMHeader(
         idxChannel = 1;
         Call(GetLineSkipPound(pWS, line, sizeof2(line)));
         FailIf(2 != sscanf((char *) line, "%u %u", &width, &height), WMP_errUnsupportedFormat);
-    } 
-    else if(line == (U8 *) strstr((char *) line, "PF")) 
+    }
+    else if(line == (U8 *) strstr((char *) line, "PF"))
     {
         idxChannel = 2;
         Call(GetLineSkipPound(pWS, line, sizeof2(line)));
         FailIf(1 != sscanf((char *) line, "%u", &width), WMP_errUnsupportedFormat);
         Call(GetLineSkipPound(pWS, line, sizeof2(line)));
         FailIf(1 != sscanf((char *) line, "%u", &height), WMP_errUnsupportedFormat);
-    } 
+    }
     else
     {
         Call(WMP_errUnsupportedFormat);
@@ -295,13 +295,13 @@ ERR PKImageDecode_Copy_PNM(
     PI.pGUIDPixFmt = &pID->guidPixFormat;
     PixelFormatLookup(&PI, LOOKUP_FORWARD);
 
-    cbLineS = (BD_1 == PI.bdBitDepth ? ((PI.cbitUnit * pID->uWidth + 7) >> 3) : (((PI.cbitUnit + 7) >> 3) * pID->uWidth)); 
-    cbLineM = (BD_1 == PI.bdBitDepth ? ((PI.cbitUnit * pRect->Width + 7) >> 3) : (((PI.cbitUnit + 7) >> 3) * pRect->Width)); 
+    cbLineS = (BD_1 == PI.bdBitDepth ? ((PI.cbitUnit * pID->uWidth + 7) >> 3) : (((PI.cbitUnit + 7) >> 3) * pID->uWidth));
+    cbLineM = (BD_1 == PI.bdBitDepth ? ((PI.cbitUnit * pRect->Width + 7) >> 3) : (((PI.cbitUnit + 7) >> 3) * pRect->Width));
     FailIf(cbStride < cbLineM, WMP_errInvalidParameter);
 
     for (i = 0; i < pRect->Height; ++i)
     {
-        size_t offLine = (BD_1 == PI.bdBitDepth ? ((PI.cbitUnit * pRect->X + 7) >> 3) : (((PI.cbitUnit + 7) >> 3) * pRect->X)); 
+        size_t offLine = (BD_1 == PI.bdBitDepth ? ((PI.cbitUnit * pRect->X + 7) >> 3) : (((PI.cbitUnit + 7) >> 3) * pRect->X));
         size_t offS = cbLineS * (pRect->Y + i) + offLine;
         size_t offM = cbStride * i + offLine;
 
