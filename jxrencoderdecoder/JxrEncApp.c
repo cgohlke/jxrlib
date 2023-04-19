@@ -55,8 +55,9 @@ void WmpEncAppUsage(const char* szExe)
     printf(CRLF);
     printf("%s [options]..." CRLF, szExe);
     printf(CRLF);
-    printf("  -i input.bmp/tif/hdr         Input image file name" CRLF);
+    printf("  -i input.bmp/pnm/tif/hdr     Input image file name" CRLF);
     printf("                               bmp: <=8bpc, BGR" CRLF);
+    printf("                               pnm: >=8bpc, RGB" CRLF);
     printf("                               tif: >=8bpc, RGB" CRLF);
     printf("                               hdr: 32bppRGBE only" CRLF);
     printf(CRLF);
@@ -615,7 +616,7 @@ main(int argc, char* argv[])
 
     //================================
     Call(PKCreateCodecFactory(&pCodecFactory, WMP_SDK_VERSION));
-    Call(pCodecFactory->CreateCodec(&IID_PKImageWmpEncode, &pEncoder));
+    Call(pCodecFactory->CreateCodec(&IID_PKImageWmpEncode, (void**)&pEncoder));
 
     //----------------------------------------------------------------
     Call(PKCreateTestFactory(&pTestFactory, WMP_SDK_VERSION));
