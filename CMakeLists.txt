@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.13)
 project(jxrlib C)
 
 # Need shared libs for ABI
-set(BUILD_SHARED_LIBS OFF)
+set(BUILD_SHARED_LIBS ON)
 
 # PIE for executables:
 set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
